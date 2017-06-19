@@ -28,70 +28,43 @@ app.get("/api/friends", function (req, res) {
     res.json(friends);
 });
 var newfriend;
- var foundFriend;
+var foundFriend;
+var difArray;
 //posting to friends object
 app.post("/api/friends", function (req, res) {
     newfriend = req.body;
     console.log(newfriend);
-
-
-
     console.log(newfriend.scores + " new friend scores");
-
     // console.log("new    "+parseInt(newfriend.scores));
     var result = newfriend.scores.map(Number);
-    console.log("result" + result);
+    console.log("result" + Array(result));
     var closeFriend = [];
-    console.log("friends ljsdflksfjklj"+friends);
+    console.log("friends ljsdflksfjklj" + friends);
     for (var i = 0; i < friends.length; i++) {
-
-        console.log(friends[i].scores + " friend scores");
-        //console.log(parseInt(friends[i].scores));
-        // console.log("new score"+newScores+"friend scores"+friendsScores);
-        difArray = _.difference(result, friends[i].scores);
-        console.log(difArray);
-        sum = difArray.map(Number).reduce(add);
-        console.log("summing : "+sum);
+        console.log(typeof (Array(result)) + "result type");
+        var ar = Array(friends[i].scores.map(Number));
+        console.log(typeof (ar) + " friend scores");
+        // difArray = _.difference(result.map(Number), friends[i].scores.map(Number));
+        difArray = _.difference(result, ar);
+        console.log(" the arary result of difference is : " + difArray);
+        sum = difArray.reduce(add);
+        console.log("summing : " + sum);
         closeFriend.push(sum);
-        ///minimum
-
-      
-        //closeFriend.sort();
-        //foundFriend = closeFriend[0];
-        //console.log()
-        //console.log(closeFriend[0] + " is the colsest friend" + friends[i]);
-        //
-        //closeFriend.sort(sortNumber);
-        console.log(closeFriend+"is the array of sorted numbers ");
-    
-        //foundFriend = friends[i];
-        console.log("found friend \n\n"+foundFriend);
-        
-        ///
+        console.log(closeFriend + "is the array of close friends numbers ");
+        console.log("found friend \n\n" + foundFriend);
     }
-     var min = Math.min.apply(Math,closeFriend);
-     
-        var index = closeFriend.indexOf(min);
-        console.log(index+"is the index of min"+min);
-        foundFriend = friends[index];
-        console.log("close friends" + closeFriend);
-    // for (var j = 0; j < friends.length; j++) {
-    //     closeFriend.push(sum);
-    //     if (closeFriend[j] < closeFriend[j + 1]) {
-    //         foundFriend = closeFriend;
-    //         console.log(closeFriend[j] + " is the colsest friend" + friends[j]);
-    //     }
-    // }
+    var min = Math.min.apply(Math, closeFriend);
+    var index = closeFriend.indexOf(min);
+    console.log(index + "is the index of min" + min);
+    foundFriend = friends[index];
+    console.log("close friends" + closeFriend);
     friends.push(newfriend);
     res.json(foundFriend);
-    fs.writeFile('./app/data/friends.json',  JSON.stringify(friends), 'utf-8', function(err){
-        if(err) throw err;
+    fs.writeFile('./app/data/friends.json', JSON.stringify(friends), 'utf-8', function (err) {
+        if (err) throw err;
     });
     console.log(friends);
 });
-function sortNumber(a,b) {
-    return a - b;
-}
 var dif;
 function add(a, b) {
     return a + b;

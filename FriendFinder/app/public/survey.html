@@ -204,6 +204,7 @@
 
             $.post(currentURL+"/api/friends", newFriend, function(data){
                 $("#matchName").text(data.name);
+                $("#matchImg").css({"hight": "400px", "width": "400px"});
 	    		$('#matchImg').attr("src", data.photo);
 
 		    	// Show the modal with the best match 
